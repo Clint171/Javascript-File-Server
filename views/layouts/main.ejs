@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>File Server</title>
+        <link rel="stylesheet" href="file_server.css">
+    </head>
+    <body>
+        <div class="navbar-div">
+            <center>
+                <h1>File Server</h1>
+                <div class="divider"></div>
+                <p><b>Path</b><br><%- path %></p>
+            </center>
+        </div>
+        <div class="container">
+            <%- body %>
+        </div>
+            <div class="status-bar">
+                <a href = "/back"><button class="back">Back</button></a>
+            </div>
+        </div>
+    </body>
+</html>

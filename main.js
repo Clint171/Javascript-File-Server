@@ -2,21 +2,48 @@
 const express = require('express'),
         fs = require("fs"), 
         path = require("path"),
-        bodyParser = require('body-parser');
-
+        bodyParser = require('body-parser'),
+        ejs = require("ejs"),
+        expressLayouts = require('express-ejs-layouts'),
+        generate = require("./lib/html_string_generator.js");
+var currentPath=``;
 const app = express();
+
+//Code to identify platform
+var platform = process.platform;
+
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
 
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.urlencoded({extended: false}));
+//app.use(expressLayouts);
 
-app.use((req, res, next) => {
-    res.render('404', {pageTitle: "Page Not Found", path: ""})
+app.all("*", function (req, res) {
+  res.setHeader("Location", req.url);
+  if( req.path == "/back"){
+    var currentPath_arr = currentPath.split("/");
+    currentPath_arr.pop();
+    currentPath = currentPath_arr.toString();
+    currentPath = currentPath.replace(",," , "/");
+    currentPath = currentPath.replace("," , "/");
+    var paths = generate(path.join(currentPath));
+
+  }
+  else if(currentPath == ``){
+    currentPath = req.path;
+    var paths = generate(path.join(req.path));
+  }
+  else{
+    currentPath = currentPath + req.path;
+    var paths = generate(path.join(currentPath));
+  }
+  console.log(currentPath);
+  res.render("./layouts/main" , {path : path.join(currentPath)  , body : paths });
 });
 
-app.get('/', function (req, res) {
-});
 
 app.listen(3000, function () {
   console.log('Server is running on port 3000')
 });
-
