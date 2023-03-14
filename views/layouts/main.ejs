@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>File Server</title>
         <link rel="stylesheet" href="file_server.css">
+        <link rel="favicon" href="favicon.ico">
     </head>
     <body>
         <div class="navbar-div">
@@ -14,12 +15,12 @@
                 <p><b>Path</b><br><%- path %></p>
             </center>
         </div>
-        <div class="container">
-            <%- body %>
+        <div class="container" id="data_div">
         </div>
             <div class="status-bar">
                 <a href = "/back"><button class="back">Back</button></a>
             </div>
         </div>
+        <script src="file_server.js"></script>
     </body>
 </html>
