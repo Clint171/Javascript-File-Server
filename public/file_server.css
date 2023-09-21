@@ -40,6 +40,14 @@ h1{
 }
 
 .item{
+    background-color: rgb(96, 123, 243);
+    min-width: 175px;
+    height: 30px;
+    border-radius: 10px 10px;
+    border : 0;
+    box-shadow: 7px 7px 7px rgb(80, 80, 80);
+}
+.item-file{
     background-color: rgb(255, 255, 255);
     min-width: 175px;
     height: 30px;
@@ -70,7 +78,7 @@ h1{
     box-shadow: 7px 7px 7px rgb(80, 80, 80);
 }
 
-.item:hover , .back:hover{
+.item:hover , .back:hover , .item-file:hover{
     background-color: rgba(255, 255, 255, 0.4);
 
 }

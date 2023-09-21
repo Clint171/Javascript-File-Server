@@ -9,16 +9,15 @@
     </head>
     <body>
         <div class="navbar-div">
-            <center>
                 <h1>File Server</h1>
                 <div class="divider"></div>
-                <p><b>Path</b><br><%- path %></p>
-            </center>
+                <p id="path_p"></p>
         </div>
         <div class="container" id="data_div">
         </div>
+        <p id="display"></p>
             <div class="status-bar">
-                <a href = "/back"><button class="back">Back</button></a>
+                <button class="back" onclick="back()">Back</button>
             </div>
         </div>
         <script src="file_server.js"></script>
