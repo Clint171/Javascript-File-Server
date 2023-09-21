@@ -12,6 +12,13 @@ body{
 
 h1{
     color: rgb(0, 0, 80);
+    text-align: center;
+    margin: 0px auto;
+}
+p {
+    color: rgb(0, 0, 80);
+    text-align: center;
+    margin: 0px auto;
 }
 .navbar-div{
     background-color: rgb(255, 255, 255);
@@ -40,11 +47,11 @@ h1{
 }
 
 .item{
-    background-color: rgb(96, 123, 243);
+    color: rgb(0, 0, 80);
     min-width: 175px;
     height: 30px;
     border-radius: 10px 10px;
-    border : 0;
+    border : 2px solid rgb(0, 0, 80);
     box-shadow: 7px 7px 7px rgb(80, 80, 80);
 }
 .item-file{
@@ -70,7 +77,8 @@ h1{
 
 .back{
     margin: 10px auto;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0,0,80);
+    color: white;
     width: 175px;
     height: 30px;
     border-radius: 10px 10px;
@@ -78,7 +86,25 @@ h1{
     box-shadow: 7px 7px 7px rgb(80, 80, 80);
 }
 
-.item:hover , .back:hover , .item-file:hover{
+.item:hover , .back:hover , .item-file:hover , .upload:hover{
     background-color: rgba(255, 255, 255, 0.4);
+    color: black;
 
+}
+.upload{
+    color: white;
+    margin: 10px auto;
+    background-color: rgb(0,0,80);
+    width: 175px;
+    height: 30px;
+    border-radius: 10px 10px;
+    border : 0;
+    box-shadow: 7px 7px 7px rgb(80, 80, 80);
+}
+.menu , .menu-file{
+    position: absolute;
+    display: none;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
