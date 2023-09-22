@@ -8,7 +8,7 @@ const fileUpload = require('express-fileupload');
 
 let fileupload = require("express-fileupload");
 const app = express();
-
+const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname,'public')));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(fileupload());
@@ -77,7 +77,7 @@ app.use((req , res)=>{
   res.status(404).send('404 Not Found');
 });
 
-app.listen(3000, function () {
-  console.log('Server is running on port 3000')
+app.listen(port, function () {
+  console.log('Server is running on port '+ port);
 });
 
