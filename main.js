@@ -52,6 +52,8 @@ app.get("/:url", function (req, res ) {
     var url = req.params.url;
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
+//Deal with spaces
+url = url.replace(" ", "%20");
     if(url == "back"){
         //convert to array
         var urlArray = req.url.split("/");
