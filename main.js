@@ -22,6 +22,7 @@ app.post("/upload/:url", function (req, res) {
     var url = req.params.url;
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"/");
     var file = req.files.file;
     if(file == null || file == undefined){
         res.send("error");
