@@ -71,6 +71,7 @@ app.get("/download/:url", function (req, res) {
     var url = req.params.url;
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
+        url = url.replace(/\s/g," ");
     //download file
     res.download(path.join(__dirname,url));
 });
