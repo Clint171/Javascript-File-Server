@@ -22,6 +22,7 @@ app.post("/upload/:url", function (req, res) {
     var url = req.params.url;
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
+    url = url.replace(/\s/, "_");
     var file = req.files.file;
     if(file == null || file == undefined){
         res.send("error");
@@ -53,7 +54,6 @@ app.get("/:url", function (req, res ) {
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
 //Deal with spaces
-url = url.replace(" ", "%20");
     if(url == "back"){
         //convert to array
         var urlArray = req.url.split("/");
@@ -71,7 +71,7 @@ app.get("/download/:url", function (req, res) {
     var url = req.params.url;
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
-        url = url.replace(/\s/g,"%20");
+        url = url.replace(/\s/g,"_");
     //download file
     res.download(path.join(__dirname,url));
 });

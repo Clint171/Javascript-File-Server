@@ -27,7 +27,7 @@ function renderFileList(folders , files) {
         li.classList.add("item");
         let filename = file.split("/");
         li.innerHTML = filename[filename.length - 1];
-        file = file.replace(/\s/g,"%20");
+        file = file.replace(/\s/g,"_");
         li.setAttribute("onclick",`getFiles("${file.replace(/\//g,"-")}")`);
         //add right click menu
         li.setAttribute("oncontextmenu",`showMenu(event)`);
@@ -38,7 +38,7 @@ function renderFileList(folders , files) {
         li.classList.add("item-file");
         let filename = file.split("/");
         li.innerHTML = filename[filename.length - 1];
-        file = file.replace(/\s/g,"%20");
+        file = file.replace(/\s/g,"_");
         li.setAttribute("onclick",`downloadFiles("${file.replace(/\//g,"-")}")`);
         //add right click menu
         li.setAttribute("oncontextmenu",`showMenuFile(event)`);
