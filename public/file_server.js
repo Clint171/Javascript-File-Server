@@ -14,7 +14,7 @@ function getFiles(url) {
     };
     xhr.send();
 }
-window.onload = getFiles('public'); 
+window.onload = getFiles('public-files'); 
 
 function renderFileList(folders , files) {
     var list = document.getElementById('data_div');
