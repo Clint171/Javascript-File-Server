@@ -1,4 +1,8 @@
 // Desc: File server for the public folder
+//DOM elements
+let menu = document.getElementById("menu");
+let menuFile = document.getElementById("menu-file");
+
 var path;
 
 function getFiles(url) {
@@ -39,7 +43,8 @@ function renderFileList(folders , files) {
         let filename = file.split("/");
         li.innerHTML = filename[filename.length - 1];
         file = file.replace(/\s/g,"_");
-        li.setAttribute("onclick",`downloadFiles("${file.replace(/\//g,"-")}")`);
+        //li.setAttribute("onclick",`downloadFiles("${file.replace(/\//g,"-")}")`);
+        li.setAttribute("onclick",`showMenuFile(event)`)
         //add right click menu
         li.setAttribute("oncontextmenu",`showMenuFile(event)`);
         list.appendChild(li);
@@ -319,25 +324,24 @@ function uploadDirectory(){
 document.addEventListener('contextmenu', event => event.preventDefault());
 //function to show right click menu
 function showMenu(event){
-    var menu = document.getElementById("menu");
     menu.style.display = "block";
+    menu.style.position = "absolute";
     menu.style.top = event.clientY + "px";
     menu.style.left = event.clientX + "px";
 }
 //function to hide right click menu
 function hideMenu(){
-    var menu = document.getElementById("menu");
     menu.style.display = "none";
 }
 //function to show right click menu for files
 function showMenuFile(event){
-    var menu = document.getElementById("menu-file");
+    var menu = menuFile;
     menu.style.display = "block";
     menu.style.top = event.clientY + "px";
     menu.style.left = event.clientX + "px";
 }
 //function to hide right click menu for files
 function hideMenuFile(){
-    var menu = document.getElementById("menu-file");
+    var menu = menuFile;
     menu.style.display = "none";
 }
