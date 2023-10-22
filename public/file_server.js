@@ -313,7 +313,8 @@ function uploadFile(){
     xhr.send(formData);
 }
 //function to upload a directory
-function uploadDirectory(){}
+function uploadDirectory(){
+}
 //Override default right click menu
 document.addEventListener('contextmenu', event => event.preventDefault());
 //function to show right click menu

@@ -105,4 +105,7 @@ dist
 # IDE Configurations
 .idea
 .vscode
-```
+
+# Files directory
+files
+test

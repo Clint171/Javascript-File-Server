@@ -45,6 +45,134 @@ app.post("/upload/:url", function (req, res) {
         }
     }); 
 });
+
+
+//Supposed to create a directory from client side
+app.post("/create/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    fs.writeFile(path.join(__dirname,url), "", function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    }); 
+}
+);
+
+//Supposed to delete a file from client side
+app.post("/delete/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    fs.unlink(path.join(__dirname,url), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+//Supposed to delete a directory from client side
+app.post("/deleteDirectory/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    fs.rmdir(path.join(__dirname,url), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+//Supposed to rename a file from client side
+app.post("/rename/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    var name = req.body.name;
+    fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+//Supposed to rename a directory from client side
+app.post("/renameDirectory/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    var name = req.body.name;
+    fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+//Supposed to move a file from client side
+app.post("/move/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    var name = req.body.name;
+    fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+//Supposed to move a directory from client side
+app.post("/moveDirectory/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    var name = req.body.name;
+    fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+
+
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, 'public/file_server.html'));
 });
