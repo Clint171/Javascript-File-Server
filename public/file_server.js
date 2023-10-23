@@ -346,6 +346,31 @@ function showMenuFile(event , path){
     downloadBtn.setAttribute("onclick" , `downloadFiles("${path}")`);
     downloadBtn.innerText = "Download";
     menu.appendChild(downloadBtn);
+    let renameBtn = document.createElement("button");
+    renameBtn.classList.add("upload");
+    renameBtn.setAttribute("onclick" , `renameFile("${path}")`);
+    renameBtn.innerText = "Rename";
+    menu.appendChild(renameBtn);
+    let moveBtn = document.createElement("button");
+    moveBtn.classList.add("upload");
+    moveBtn.setAttribute("onclick" , `moveFile("${path}")`);
+    moveBtn.innerText = "Move";
+    menu.appendChild(moveBtn);
+    let copyBtn = document.createElement("button");
+    copyBtn.classList.add("upload");
+    copyBtn.setAttribute("onclick" , `copyFile("${path}")`);
+    copyBtn.innerText = "Copy";
+    menu.appendChild(copyBtn);
+    let deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("upload");
+    deleteBtn.setAttribute("onclick" , `deleteFile("${path}")`);
+    deleteBtn.innerText = "Delete";
+    menu.appendChild(deleteBtn);
+    let closeBtn = document.createElement("button");
+    closeBtn.classList.add("upload");
+    closeBtn.setAttribute("onclick" , `hideMenuFile()`);
+    closeBtn.innerText = "Close";
+    menu.appendChild(closeBtn);
 
 }
 //function to hide right click menu for files
