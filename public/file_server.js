@@ -220,6 +220,8 @@ function moveFile(name){
         return;
     }
     var url = path;
+    let form = new FormData();
+    form.append("name" , name);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {
@@ -232,7 +234,7 @@ function moveFile(name){
             alert("Error moving file");
         }
     }
-    xhr.send(`${name} ${newName}`);
+    xhr.send(form);
 }
 //function to move a directory
 function moveDirectory(name){
