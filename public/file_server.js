@@ -42,11 +42,12 @@ function renderFileList(folders , files) {
         li.classList.add("item-file");
         let filename = file.split("/");
         li.innerHTML = filename[filename.length - 1];
+        li.setAttribute("id" , file.replace(/\//g,"-"));
         file = file.replace(/\s/g,"_");
         //li.setAttribute("onclick",`downloadFiles("${file.replace(/\//g,"-")}")`);
-        li.setAttribute("onclick",`showMenuFile(event)`)
+        li.setAttribute("onclick",`showMenuFile(event , "${file.replace(/\//g,"-")}")`);
         //add right click menu
-        li.setAttribute("oncontextmenu",`showMenuFile(event)`);
+        li.setAttribute("oncontextmenu",`showMenuFile(event , "${file.replace(/\//g,"-")}")`);
         list.appendChild(li);
     });
 }
@@ -334,14 +335,22 @@ function hideMenu(){
     menu.style.display = "none";
 }
 //function to show right click menu for files
-function showMenuFile(event){
+function showMenuFile(event , path){
     var menu = menuFile;
+    menu.innerHTML = "";
     menu.style.display = "block";
     menu.style.top = event.clientY + "px";
     menu.style.left = event.clientX + "px";
+    let downloadBtn = document.createElement("button");
+    downloadBtn.classList.add("upload");
+    downloadBtn.setAttribute("onclick" , `downloadFiles("${path}")`);
+    downloadBtn.innerText = "Download";
+    menu.appendChild(downloadBtn);
+
 }
 //function to hide right click menu for files
 function hideMenuFile(){
     var menu = menuFile;
+    menu.innerHTML = "";
     menu.style.display = "none";
 }
