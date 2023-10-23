@@ -93,7 +93,7 @@ function createDirectory(){
     var xhr = new XMLHttpRequest();
     let form = new FormData();
     form.append("name" , name);
-    xhr.open('POST', `/create/${name}`);
+    xhr.open('POST', `/create/${url+"-"+name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("Directory created successfully");
@@ -104,6 +104,7 @@ function createDirectory(){
         }
     }
     xhr.send(form);
+    hideMenuFile();
 }
 //function to delete a directory
 function deleteDirectory(name){
@@ -126,22 +127,26 @@ function deleteDirectory(name){
 }
 //function to delete a file
 function deleteFile(name){
-    if(name == null || name == ""){
-        return;
-    }
-    var url = path;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/delete/${name}`);
-    xhr.onload = function() {
-        if(xhr.responseText == "success"){
-            alert("File deleted successfully");
-            getFiles(path);
+    let confirm = prompt("Are you sure? Y/n");
+    if(confirm == "Y" || confirm == "y"){
+        if(name == null || name == ""){
+            return;
         }
-        else{
-            alert("Error deleting file");
+        var url = path;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', `/delete/${name}`);
+        xhr.onload = function() {
+            if(xhr.responseText == "success"){
+                alert("File deleted successfully");
+                getFiles(path);
+            }
+            else{
+                alert("Error deleting file");
+            }
         }
+        xhr.send(name);
     }
-    xhr.send(name);
+    
 }
 //function to rename a file
 function renameFile(name){
@@ -341,18 +346,8 @@ document.addEventListener('contextmenu', event => {
     event.preventDefault();
     contextmenu();
 });
-//function to show right click menu
-function showMenu(event){
-    menu.style.display = "block";
-    menu.style.position = "absolute";
-    menu.style.top = event.clientY + "px";
-    menu.style.left = event.clientX + "px";
-}
-//function to hide right click menu
-function hideMenu(){
-    menu.style.display = "none";
-}
-//function to show right click menu for files
+
+//function to show menu for files
 function showMenuFile(event , path){
     var menu = menuFile;
     menu.innerHTML = "";

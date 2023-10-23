@@ -111,7 +111,7 @@ p {
 
 .upload-div{
     position: fixed;
-    display: nones;
+    display: none;
     flex-direction: column;
     justify-content: center;
     width: 12em;
