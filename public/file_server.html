@@ -9,23 +9,19 @@
     </head>
     <body>
         <div class="navbar-div">
-                <h1>File Server</h1>
-                <div class="divider"></div>
-                <p id="path_p"></p>
+            <h1>File Server</h1>
+            <div class="divider"></div>
+            <p id="path_p"></p>
         </div>
-        <div class="menu" id="menu">
+        <div class="menu" id="menu"></div>
+        <button class="back" onclick="back()">Back</button>
+        <div class="upload-div" id="uploadDiv">
+            <input type="file" name="file" id="file" required><br>
+            <button class="upload" onclick="uploadFile()">Upload</button>
+            <button class="upload" onclick="hideUpload()">Cancel</button>
         </div>
-        <div class="menu-file" id="menu-file">
-        </div>
-        <div class="container" id="data_div">
-            
-        </div>
-            <div class="status-bar">
-                <button class="back" onclick="back()">Back</button>
-                <input type="file" name="file" id="file" required>
-                <button class="upload" onclick="uploadFile()">Upload</button>
-            </div>
-        </div>
+        <div class="container" id="data_div"></div>
+        <div class="status-bar"></div>
         <script src="file_server.js"></script>
     </body>
 </html>

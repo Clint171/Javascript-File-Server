@@ -1,7 +1,7 @@
 // Desc: File server for the public folder
 //DOM elements
-let menu = document.getElementById("menu");
-let menuFile = document.getElementById("menu-file");
+let menuFile = document.getElementById("menu");
+let uploadDiv = document.getElementById("uploadDiv");
 
 var path;
 
@@ -67,7 +67,7 @@ function createFile(name){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/create/${url}`);
+    xhr.open('POST', `/create/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("File created successfully");
@@ -91,7 +91,9 @@ function createDirectory(){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/create/${url}`);
+    let form = new FormData();
+    form.append("name" , name);
+    xhr.open('POST', `/create/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("Directory created successfully");
@@ -101,7 +103,7 @@ function createDirectory(){
             alert("Error creating directory");
         }
     }
-    xhr.send(name);
+    xhr.send(form);
 }
 //function to delete a directory
 function deleteDirectory(name){
@@ -110,7 +112,7 @@ function deleteDirectory(name){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/delete/${url}`);
+    xhr.open('POST', `/delete/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("Directory deleted successfully");
@@ -129,7 +131,7 @@ function deleteFile(name){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/delete/${url}`);
+    xhr.open('POST', `/delete/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("File deleted successfully");
@@ -151,6 +153,11 @@ function renameFile(name){
         return;
     }
     var url = path;
+    let form = new FormData();
+    newName = newName.replace(/\s/g,"_");
+    newName = newName.replace(/\//g,"-");
+    form.append("name" , name);
+    form.append("newName" , newName);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', `/rename/${url}`);
     xhr.onload = function() {
@@ -162,7 +169,7 @@ function renameFile(name){
             alert("Error renaming file");
         }
     }
-    xhr.send(`${name} ${newName}`);
+    xhr.send(form);
 }
 //function to rename a directory
 function renameDirectory(name){
@@ -175,6 +182,11 @@ function renameDirectory(name){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
+    let form = new FormData();
+    newName = newName.replace(/\s/g,"_");
+    newName = newName.replace(/\//g,"-");
+    form.append("name" , name);
+    form.append("newName" , newName);
     xhr.open('POST', `/rename/${url}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
@@ -185,7 +197,7 @@ function renameDirectory(name){
             alert("Error renaming directory");
         }
     }
-    xhr.send(`${name} ${newName}`);
+    xhr.send(form);
 }
 //function to move a file
 function moveFile(name){
@@ -198,7 +210,7 @@ function moveFile(name){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/move/${url}`);
+    xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("File moved successfully");
@@ -221,7 +233,7 @@ function moveDirectory(name){
     }
     var url = path;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/move/${url}`);
+    xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             alert("Directory moved successfully");
@@ -266,6 +278,9 @@ function copyDirectory(name){
         return;
     }
     var url = path;
+    let form = new FormData();
+    form.append("name" , name);
+    form.append("newName" , newName);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', `/copy/${url}`);
     xhr.onload = function() {
@@ -277,7 +292,7 @@ function copyDirectory(name){
             alert("Error copying directory");
         }
     }
-    xhr.send(`${name} ${newName}`);
+    xhr.send(form);
 }
 //function to download a directory
 function downloadDirectory(name){
@@ -322,7 +337,10 @@ function uploadFile(){
 function uploadDirectory(){
 }
 //Override default right click menu
-document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('contextmenu', event => {
+    event.preventDefault();
+    contextmenu();
+});
 //function to show right click menu
 function showMenu(event){
     menu.style.display = "block";
@@ -378,4 +396,39 @@ function hideMenuFile(){
     var menu = menuFile;
     menu.innerHTML = "";
     menu.style.display = "none";
+}
+
+function contextmenu(){
+    var menu = menuFile;
+    menu.innerHTML = "";
+    let folderBtn = document.createElement("button");
+    folderBtn.classList.add("upload");
+    folderBtn.setAttribute("onclick" , `createDirectory()`);
+    folderBtn.innerText = "Create Folder";
+    menu.appendChild(folderBtn);
+    let fileBtn = document.createElement("button");
+    fileBtn.classList.add("upload");
+    fileBtn.setAttribute("onclick" , `showUpload(event)`);
+    fileBtn.innerText = "Upload File";
+    menu.appendChild(fileBtn);
+    let closeBtn = document.createElement("button");
+    closeBtn.classList.add("upload");
+    closeBtn.setAttribute("onclick" , `hideMenuFile()`);
+    closeBtn.innerText = "Close";
+    menu.appendChild(closeBtn);
+    menu.style.display = "block";
+    menu.style.top = event.clientY + "px";
+    menu.style.left = event.clientX + "px";
+}
+
+function showUpload(){
+    uploadDiv.style.display = "block";
+    uploadDiv.style.left = (event.clientX-100)+"px";
+    uploadDiv.style.top = (event.clientY)+"px";
+    hideMenuFile();
+    hideMenu();
+}
+
+function hideUpload(){
+    uploadDiv.style.display = "none";
 }

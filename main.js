@@ -4,7 +4,6 @@ const express = require('express'),
         path = require("path"),
         bodyParser = require('body-parser'),
         fsRead = require("./lib/filesystem.js");
-const fileUpload = require('express-fileupload');
 
 let fileupload = require("express-fileupload");
 const app = express();
@@ -105,8 +104,11 @@ app.post("/rename/:url", function (req, res) {
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
     url = url.replace(/\s/g,"_");
-    var name = req.body.name;
-    fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
+    var name = req.body.name.split("-");
+    var newName = req.body.newName;
+    console.log(path.join(__dirname,url,name[name.length-1]));
+    console.log(path.join(__dirname,url,newName));
+    fs.rename(path.join(__dirname,url,name[name.length-1]), path.join(__dirname,url,newName), function(err) {
         if(err) {
             console.log(err);
             res.send("error");
