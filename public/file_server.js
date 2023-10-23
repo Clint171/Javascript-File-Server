@@ -70,6 +70,7 @@ function createFile(name){
     xhr.open('POST', `/create/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("File created successfully");
             getFiles(path);
         }
@@ -108,6 +109,7 @@ function createDirectory(){
 }
 //function to delete a directory
 function deleteDirectory(name){
+    hideMenuFile();
     if(name == null || name == ""){
         return;
     }
@@ -127,6 +129,7 @@ function deleteDirectory(name){
 }
 //function to delete a file
 function deleteFile(name){
+    
     let confirm = prompt("Are you sure? Y/n");
     if(confirm == "Y" || confirm == "y"){
         if(name == null || name == ""){
@@ -137,6 +140,7 @@ function deleteFile(name){
         xhr.open('POST', `/delete/${name}`);
         xhr.onload = function() {
             if(xhr.responseText == "success"){
+                hideMenuFile();
                 alert("File deleted successfully");
                 getFiles(path);
             }
@@ -167,6 +171,7 @@ function renameFile(name){
     xhr.open('POST', `/rename/${url}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("File renamed successfully");
             getFiles(path);
         }
@@ -195,6 +200,7 @@ function renameDirectory(name){
     xhr.open('POST', `/rename/${url}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("Directory renamed successfully");
             getFiles(path);
         }
@@ -218,6 +224,7 @@ function moveFile(name){
     xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("File moved successfully");
             getFiles(path);
         }
@@ -241,6 +248,7 @@ function moveDirectory(name){
     xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("Directory moved successfully");
             getFiles(path);
         }
@@ -264,6 +272,7 @@ function copyFile(name){
     xhr.open('POST', `/copy/${url}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("File copied successfully");
             getFiles(path);
         }
@@ -290,6 +299,7 @@ function copyDirectory(name){
     xhr.open('POST', `/copy/${url}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
             alert("Directory copied successfully");
             getFiles(path);
         }
@@ -329,10 +339,14 @@ function uploadFile(){
     xhr.open('POST', `/upload/${url}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
+            hideMenuFile();
+            hideUpload();
             alert("File uploaded successfully");
             getFiles(path);
         }
         else{
+            hideMenuFile();
+            hideUpload();
             alert("Error uploading file");
         }
     }
