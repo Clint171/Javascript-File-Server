@@ -53,6 +53,7 @@ p {
     border-radius: 10px 10px;
     border : 2px solid rgb(0, 0, 80);
     box-shadow: 7px 7px 7px rgb(80, 80, 80);
+    cursor: pointer;
 }
 .item-file{
     background-color: rgb(255, 255, 255);
@@ -61,6 +62,7 @@ p {
     border-radius: 10px 10px;
     border : 0;
     box-shadow: 7px 7px 7px rgb(80, 80, 80);
+    cursor: pointer;
 }
 
 .status-bar{

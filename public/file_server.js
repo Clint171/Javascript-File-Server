@@ -421,7 +421,6 @@ function showUpload(){
     uploadDiv.style.left = (event.clientX-100)+"px";
     uploadDiv.style.top = (event.clientY)+"px";
     hideMenuFile();
-    hideMenu();
 }
 
 function hideUpload(){
