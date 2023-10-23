@@ -52,7 +52,7 @@ app.post("/create/:url", function (req, res) {
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
     url = url.replace(/\s/g,"_");
-    fs.mkdirSync(path.join(__dirname,url), function(err) {
+    fs.mkdir(path.join(__dirname,url), function(err) {
         if(err) {
             console.log(err);
             res.send("error");

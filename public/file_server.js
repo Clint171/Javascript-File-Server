@@ -85,6 +85,7 @@ function downloadFiles(url){
 }
 //function to create a directory
 function createDirectory(){
+    hideMenuFile();
     var name = prompt("Enter directory name");
     if(name == null || name == ""){
         return;
@@ -104,7 +105,6 @@ function createDirectory(){
         }
     }
     xhr.send(form);
-    hideMenuFile();
 }
 //function to delete a directory
 function deleteDirectory(name){
