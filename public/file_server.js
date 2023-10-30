@@ -221,7 +221,7 @@ function moveFile(name){
     }
     var url = path;
     let form = new FormData();
-    form.append("name" , name);
+    form.append("name" , newName);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {

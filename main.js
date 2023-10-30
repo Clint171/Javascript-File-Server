@@ -60,9 +60,8 @@ app.post("/create/:url", function (req, res) {
         else{
             res.send("success");
         }
-    }); 
-}
-);
+    });
+});
 
 //Supposed to delete a file from client side
 app.post("/delete/:url", function (req, res) {
@@ -106,8 +105,6 @@ app.post("/rename/:url", function (req, res) {
     url = url.replace(/\s/g,"_");
     var name = req.body.name.split("-");
     var newName = req.body.newName;
-    console.log(path.join(__dirname,url,name[name.length-1]));
-    console.log(path.join(__dirname,url,newName));
     fs.rename(path.join(__dirname,url,name[name.length-1]), path.join(__dirname,url,newName), function(err) {
         if(err) {
             console.log(err);
@@ -125,7 +122,7 @@ app.post("/renameDirectory/:url", function (req, res) {
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
     url = url.replace(/\s/g,"_");
-    var name = req.body.name;
+    var name = req.body.name.replace(/-/g,"/");
     fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
         if(err) {
             console.log(err);
@@ -143,7 +140,10 @@ app.post("/move/:url", function (req, res) {
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
     url = url.replace(/\s/g,"_");
-    var name = req.body.name;
+    var name = req.body.name.replace(/-/g,"/");
+    console.log(url);
+    console.log(req.body.name);
+    console.log(name);
     fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
         if(err) {
             console.log(err);
@@ -161,7 +161,7 @@ app.post("/moveDirectory/:url", function (req, res) {
     //replace dashes with slashes
     url = url.replace(/-/g,"/");
     url = url.replace(/\s/g,"_");
-    var name = req.body.name;
+    var name = req.body.name.replace(/-/g,"/");
     fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
         if(err) {
             console.log(err);
