@@ -141,9 +141,6 @@ app.post("/move/:url", function (req, res) {
     url = url.replace(/-/g,"/");
     url = url.replace(/\s/g,"_");
     var name = req.body.name.replace(/-/g,"/");
-    console.log(url);
-    console.log(req.body.name);
-    console.log(name);
     fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
         if(err) {
             console.log(err);
@@ -163,6 +160,25 @@ app.post("/moveDirectory/:url", function (req, res) {
     url = url.replace(/\s/g,"_");
     var name = req.body.name.replace(/-/g,"/");
     fs.rename(path.join(__dirname,url), path.join(__dirname,name), function(err) {
+        if(err) {
+            console.log(err);
+            res.send("error");
+        }
+        else{
+            res.send("success");
+        }
+    });
+});
+
+app.post("/copy/:url", function (req, res) {
+    var url = req.params.url;
+    //replace dashes with slashes
+    url = url.replace(/-/g,"/");
+    url = url.replace(/\s/g,"_");
+    var name = req.body.name.replace(/-/g,"/");
+    console.log(url);
+    console.log(name);
+    fs.copyFile(path.join(__dirname,url), path.join(__dirname,name), function(err) {
         if(err) {
             console.log(err);
             res.send("error");

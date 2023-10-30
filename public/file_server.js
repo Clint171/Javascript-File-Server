@@ -245,7 +245,6 @@ function moveDirectory(name){
     if(newName == null || newName == ""){
         return;
     }
-    var url = path;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', `/move/${name}`);
     xhr.onload = function() {
@@ -270,8 +269,10 @@ function copyFile(name){
         return;
     }
     var url = path;
+    let form = new FormData();
+    form.append("name" , newName);
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', `/copy/${url}`);
+    xhr.open('POST', `/copy/${name}`);
     xhr.onload = function() {
         if(xhr.responseText == "success"){
             hideMenuFile();
@@ -282,7 +283,7 @@ function copyFile(name){
             alert("Error copying file");
         }
     }
-    xhr.send(`${name} ${newName}`);
+    xhr.send(form);
 }
 //function to copy a directory
 function copyDirectory(name){
