@@ -18,7 +18,7 @@ function getFiles(url) {
     };
     xhr.send();
 }
-window.onload = getFiles('public-files'); 
+window.onload = getFiles('public-files');
 
 function renderFileList(folders , files) {
     var list = document.getElementById('data_div');
@@ -215,7 +215,8 @@ function moveFile(name){
     if(name == null || name == ""){
         return;
     }
-    var newName = prompt("Enter new path");
+    var newName = prompt("Enter new path. Please use linux file system format");
+    newName = newName.replace(/\//g,"-");
     if(newName == null || newName == ""){
         return;
     }
@@ -264,7 +265,8 @@ function copyFile(name){
     if(name == null || name == ""){
         return;
     }
-    var newName = prompt("Enter new path");
+    var newName = prompt("Enter new path. Please use linux file system format.");
+    newName = newName.replace(/\//g,"-");
     if(newName == null || newName == ""){
         return;
     }
