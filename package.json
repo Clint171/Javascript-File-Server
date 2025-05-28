@@ -1,36 +1,24 @@
 {
   "name": "javascript-file-server",
   "version": "1.0.0",
-  "description": "A node.js \u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D simple node.js file server",
-  "main": "\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001bmain.js)\u001b[",
+  "description": "File server written in Javascript using S3 for file storage",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Clint171/Javascript-File-Server.git"
   },
   "keywords": [
-    "File_server",
-    "Javascript",
-    "Node.js"
+    "file-server",
+    "server",
+    "node.js"
   ],
   "author": "Clint Simiyu",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/Clint171/Javascript-File-Server/issues"
   },
-  "homepage": "https://github.com/Clint171/Javascript-File-Server#readme",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "ejs": "^3.1.8",
-    "express": "^4.18.2",
-    "express-ejs-layouts": "^2.5.1",
-    "express-fileupload": "^1.4.0",
-    "ws": "^8.12.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  }
+  "homepage": "https://github.com/Clint171/Javascript-File-Server#readme"
 }

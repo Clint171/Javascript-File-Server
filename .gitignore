@@ -108,3 +108,6 @@ dist
 
 # Files directory
 test
+
+# Config json file
+config.json
