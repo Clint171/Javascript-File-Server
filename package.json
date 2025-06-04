@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/Clint171/Javascript-File-Server/issues"
   },
-  "homepage": "https://github.com/Clint171/Javascript-File-Server#readme"
+  "homepage": "https://github.com/Clint171/Javascript-File-Server#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "multer": "^2.0.0",
+    "winston": "^3.17.0"
+  }
 }
