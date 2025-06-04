@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: File Server Microservice
+  description: A simple file server microservice for uploading, downloading, updating, and deleting files via AWS S3.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+
+  /upload:
+    post:
+      summary: Upload a new file
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded
+      security:
+        - ApiKeyAuth: []
+
+  /file/{filename}:
+    get:
+      summary: Download a file by filename
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File content
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: File not found
+      security:
+        - ApiKeyAuth: []
+
+    put:
+      summary: Update an existing file
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File updated
+      security:
+        - ApiKeyAuth: []
+
+    delete:
+      summary: Delete a file by filename
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File deleted
+        '404':
+          description: File not found
+      security:
+        - ApiKeyAuth: []
