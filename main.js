@@ -1,23 +1,59 @@
+require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 const fs = require('fs');
-const path = require('path');
-
-// Load config
-const config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
-const { accessKeyId, secretAccessKey, region, bucket } = config.aws;
+const rateLimit = require('express-rate-limit');
+const winston = require('winston');
 
 const app = express();
-const port = config.port || 3000;
+const port = process.env.PORT || 3000;
 
-// Configure AWS S3
-const s3 = new AWS.S3({ accessKeyId, secretAccessKey, region });
+// Setup logger
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.simple(),
+  transports: [new winston.transports.Console()]
+});
 
-// Multer for file uploads (stored in memory before sending to S3)
-const upload = multer({ storage: multer.memoryStorage() });
+// Rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 mins
+  max: 100,
+  message: 'Too many requests from this IP, please try again later.'
+});
+app.use(limiter);
 
-// Upload new file
+// Middleware: Auth check
+app.use((req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  if (!authHeader || authHeader !== `Bearer ${process.env.API_KEY}`) {
+    logger.warn('Unauthorized access attempt');
+    // Allow acces for now, for development purposes
+    // return res.status(401).send('Unauthorized');
+  }
+  next();
+});
+
+// AWS S3 setup
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
+
+const bucket = process.env.AWS_BUCKET;
+
+// Multer setup
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 } // 10 MB
+});
+
+// Health check
+app.get('/health', (req, res) => res.send('OK'));
+
+// Upload
 app.post('/upload', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).send('No file uploaded.');
 
@@ -29,13 +65,15 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
   try {
     await s3.upload(params).promise();
-    res.send({ message: 'File uploaded successfully', filename: req.file.originalname });
+    logger.info(`Uploaded: ${req.file.originalname}`);
+    res.send({ message: 'File uploaded successfully' });
   } catch (err) {
+    logger.error(err);
     res.status(500).send('Error uploading file: ' + err.message);
   }
 });
 
-// Download file
+// Download
 app.get('/file/:filename', async (req, res) => {
   const params = {
     Bucket: bucket,
@@ -47,15 +85,12 @@ app.get('/file/:filename', async (req, res) => {
     res.setHeader('Content-Disposition', `attachment; filename="${req.params.filename}"`);
     res.send(data.Body);
   } catch (err) {
-    if (err.code === 'NoSuchKey') {
-      res.status(404).send('File not found.');
-    } else {
-      res.status(500).send('Error downloading file: ' + err.message);
-    }
+    logger.error(err);
+    res.status(err.code === 'NoSuchKey' ? 404 : 500).send('Error retrieving file');
   }
 });
 
-// Update/replace existing file
+// Update
 app.put('/file/:filename', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).send('No file uploaded.');
 
@@ -67,13 +102,15 @@ app.put('/file/:filename', upload.single('file'), async (req, res) => {
 
   try {
     await s3.upload(params).promise();
-    res.send({ message: 'File updated successfully', filename: req.params.filename });
+    logger.info(`Updated: ${req.params.filename}`);
+    res.send({ message: 'File updated successfully' });
   } catch (err) {
-    res.status(500).send('Error updating file: ' + err.message);
+    logger.error(err);
+    res.status(500).send('Error updating file');
   }
 });
 
-// Delete file
+// Delete
 app.delete('/file/:filename', async (req, res) => {
   const params = {
     Bucket: bucket,
@@ -82,12 +119,20 @@ app.delete('/file/:filename', async (req, res) => {
 
   try {
     await s3.deleteObject(params).promise();
-    res.send({ message: 'File deleted successfully', filename: req.params.filename });
+    logger.info(`Deleted: ${req.params.filename}`);
+    res.send({ message: 'File deleted successfully' });
   } catch (err) {
-    res.status(500).send('Error deleting file: ' + err.message);
+    logger.error(err);
+    res.status(500).send('Error deleting file');
   }
 });
 
+// Error handler
+app.use((err, req, res, next) => {
+  logger.error(err.stack);
+  res.status(500).send({ error: 'Something went wrong!' });
+});
+
 app.listen(port, () => {
-  console.log(`File server running at http://localhost:${port}/`);
+  logger.info(`File server running on port ${port}`);
 });
